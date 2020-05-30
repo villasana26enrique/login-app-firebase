@@ -21,8 +21,7 @@ export class RegistroComponent implements OnInit {
     // Si el formulario es Invalido, se ejecuta el return y no imprime los console.log
     if (form.invalid) { return; }
 
-    console.log('Formulario enviado');
-    console.log(this.usuario);
+    // Formulario
     console.log(form);
   }
 
