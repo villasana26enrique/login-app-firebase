@@ -12,12 +12,12 @@ export class AuthService {
 
   /*
     Crear Nuevos Usuarios:
-    https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
+    signUp?key=[API_KEY]
   */
 
   /**
    * Ingresar con Usuario y Contraseña
-   * https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]
+   * signInWithPassword?key=[API_KEY]
    */
 
   constructor( private http: HttpClient ) { }
@@ -26,11 +26,19 @@ export class AuthService {
 
   }
 
-  signIn(usuario: UsuarioModel) {
+  signIn$(usuario: UsuarioModel) {
 
   }
 
-  signUp(usuario: UsuarioModel) {
+  signUp$(usuario: UsuarioModel) {
+    const authData = {
+      ...usuario,
+      returnSecureToken: true
+    };
 
+    return this.http.post(
+      `${ this.url }signUp?key=${ this.apiKey }`,
+      authData
+    );
   }
 }
