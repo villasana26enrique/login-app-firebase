@@ -42,10 +42,16 @@
                     </div>
                 </div>
 
+                <span *ngIf="error" class="text-danger animated fadeIn">Ha Ocurrido un error al crear la cuenta. Intente nuevamente.</span>
                 <div class="container-login100-form-btn m-t-17">
                     <button class="login100-form-btn" type="submit">
-                            Crear cuenta
-                        </button>
+                        <span *ngIf="!loading">
+                            Crear cuenta        
+                        </span>
+                        <span *ngIf="loading">
+                            <i class="fa fa-spinner fa-spin"></i>            
+                        </span>
+                    </button>
                 </div>
 
             </form>

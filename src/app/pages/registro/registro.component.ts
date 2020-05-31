@@ -13,6 +13,8 @@ export class RegistroComponent implements OnInit {
 
   usuario: UsuarioModel;
   recordarme = false;
+  loading = false;
+  error = false;
 
   constructor( private auth: AuthService,
                private router: Router) { }
@@ -24,17 +26,20 @@ export class RegistroComponent implements OnInit {
   onSubmit(form: NgForm) {
     // Si el formulario es Invalido, se ejecuta el return y no imprime los console.log
     if (form.invalid) { return; }
-    // TODO: Debo Mostrar un Alerta o Algo que indique que esta "Cargando" o Debe esperar
+    this.loading = true;
+    this.error = false;
     this.auth.signUp$( this.usuario ).subscribe(
       (resp: any) => {
-        // TODO: Cerrar el Cargando o el Alerta
         if ( this.recordarme === true ) {
           localStorage.setItem('email', this.usuario.email);
         }
+        this.loading = false;
         this.router.navigateByUrl('/home');
       },
       (err) => {
         // TODO: Mostrar error en panalla
+        this.loading = false;
+        this.error = true;
         console.log(err.error.error.message);
       });
   }

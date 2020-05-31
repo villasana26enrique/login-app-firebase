@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
 
   usuario: UsuarioModel;
   recordarme = false;
+  loading = false;
+  error = false;
 
   constructor( private auth: AuthService,
                private router: Router ) { }
@@ -27,19 +29,21 @@ export class LoginComponent implements OnInit {
 
   login(form: NgForm) {
     if ( form.invalid ) { return; }
-    // TODO: Debo Mostrar un Alerta o Algo que indique que esta "Cargando" o Debe esperar
+    this.loading =  true;
+    this.error = false;
     this.auth.signIn$( this.usuario ).subscribe(
       (resp: any) => {
         console.log(resp);
-        // TODO: Cerrar el Cargando o el Alerta
         if ( this.recordarme === true ) {
           localStorage.setItem('email', this.usuario.email);
         }
-
+        this.loading =  false;
         this.router.navigateByUrl('/home');
       },
       (err: any) => {
         // TODO: Mostrar error en panalla
+        this.loading =  false;
+        this.error = true;
         console.log(err.error.error.message);
       });
   }
