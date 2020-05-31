@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class RegistroComponent implements OnInit {
 
   usuario: UsuarioModel;
+  recordarme = false;
 
   constructor( private auth: AuthService,
                private router: Router) { }
@@ -27,6 +28,9 @@ export class RegistroComponent implements OnInit {
     this.auth.signUp$( this.usuario ).subscribe(
       (resp: any) => {
         // TODO: Cerrar el Cargando o el Alerta
+        if ( this.recordarme === true ) {
+          localStorage.setItem('email', this.usuario.email);
+        }
         this.router.navigateByUrl('/home');
       },
       (err) => {
