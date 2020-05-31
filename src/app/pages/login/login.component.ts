@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
     // TODO: Debo Mostrar un Alerta o Algo que indique que esta "Cargando" o Debe esperar
     this.auth.signIn$( this.usuario ).subscribe(
       (resp: any) => {
+        console.log(resp);
         // TODO: Cerrar el Cargando o el Alerta
         if ( this.recordarme === true ) {
           localStorage.setItem('email', this.usuario.email);

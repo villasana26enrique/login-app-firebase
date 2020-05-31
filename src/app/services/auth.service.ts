@@ -67,6 +67,10 @@ export class AuthService {
   private saveToken( idToken: string ) {
     this.userToken = idToken;
     localStorage.setItem( 'token', idToken );
+
+    let today = new Date();
+    today.setSeconds( 3600 );
+    localStorage.setItem( 'expira_en', today.getTime().toString() );
   }
 
   readToken() {
@@ -79,6 +83,17 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return this.userToken.length > 2;
+    if ( this.userToken.length < 2 ) {
+      return false;
+    } else {
+      const expira = Number(localStorage.getItem('expira_en'));
+      const expiraDate = new Date();
+      expiraDate.setTime( expira );
+      if ( expiraDate > new Date() ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 }
